@@ -1,0 +1,483 @@
+/* ===========================
+   ZERAX ABOUT PAGE
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f5f7fb;
+    color:#1e293b;
+    line-height:1.8;
+}
+
+/* Container */
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.hero{
+    min-height:70vh;
+    background:linear-gradient(135deg,#2563eb,#0f172a);
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    padding:100px 20px;
+}
+
+.hero-content{
+    max-width:800px;
+}
+
+.hero h1{
+
+    font-size:60px;
+
+    margin-bottom:20px;
+
+    font-weight:700;
+
+}
+
+.hero p{
+
+    font-size:22px;
+
+    opacity:.95;
+
+    margin-bottom:35px;
+
+}
+
+/* Button */
+
+.btn{
+
+display:inline-block;
+
+background:white;
+
+color:#2563eb;
+
+padding:15px 35px;
+
+text-decoration:none;
+
+border-radius:50px;
+
+font-weight:600;
+
+transition:.4s;
+
+}
+
+.btn:hover{
+
+background:#2563eb;
+
+color:white;
+
+transform:translateY(-5px);
+
+box-shadow:0 12px 25px rgba(0,0,0,.25);
+
+}
+
+/* ===========================
+   SECTION TITLE
+=========================== */
+
+section{
+
+padding:90px 0;
+
+}
+
+section h2{
+
+text-align:center;
+
+font-size:42px;
+
+margin-bottom:50px;
+
+color:#1e3a8a;
+
+}
+
+/* ===========================
+   STORY
+=========================== */
+
+.story-grid{
+
+display:grid;
+
+grid-template-columns:2fr 1fr;
+
+gap:60px;
+
+align-items:center;
+
+}
+
+.story-text p{
+
+font-size:18px;
+
+margin-bottom:25px;
+
+color:#475569;
+
+}
+
+.story-image{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.story-image i{
+
+font-size:170px;
+
+color:#2563eb;
+
+}
+
+/* ===========================
+   MISSION
+=========================== */
+
+.cards{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:30px;
+
+}
+
+.card{
+
+background:white;
+
+padding:35px;
+
+border-radius:18px;
+
+text-align:center;
+
+transition:.4s;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+}
+
+.card:hover{
+
+transform:translateY(-10px);
+
+}
+
+.card i{
+
+font-size:55px;
+
+color:#2563eb;
+
+margin-bottom:20px;
+
+}
+
+.card h3{
+
+margin-bottom:15px;
+
+font-size:24px;
+
+}
+
+.card p{
+
+color:#64748b;
+
+}
+
+/* ===========================
+   VISION
+=========================== */
+
+.vision{
+
+background:white;
+
+}
+
+.center{
+
+max-width:800px;
+
+margin:auto;
+
+font-size:22px;
+
+text-align:center;
+
+color:#475569;
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:900px){
+
+.hero h1{
+
+font-size:42px;
+
+}
+
+.hero p{
+
+font-size:18px;
+
+}
+
+.story-grid{
+
+grid-template-columns:1fr;
+
+text-align:center;
+
+}
+
+.story-image{
+
+margin-top:30px;
+
+}
+
+.story-image i{
+
+font-size:120px;
+
+}
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+section h2{
+
+font-size:34px;
+
+}
+
+}
+/* ===========================
+   SERVICES
+=========================== */
+
+.services{
+    background:#eef4ff;
+}
+
+.service-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.service-card{
+    background:#fff;
+    padding:35px 25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    transition:.4s;
+}
+
+.service-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(37,99,235,.18);
+}
+
+.service-card i{
+    font-size:50px;
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.service-card h3{
+    margin-bottom:15px;
+    color:#1e3a8a;
+}
+
+.service-card p{
+    color:#64748b;
+}
+
+/* ===========================
+   VALUES
+=========================== */
+
+.values{
+    background:white;
+}
+
+.values ul{
+    max-width:700px;
+    margin:auto;
+    list-style:none;
+}
+
+.values li{
+    background:#f8fafc;
+    margin:15px 0;
+    padding:18px 25px;
+    border-left:5px solid #2563eb;
+    border-radius:10px;
+    font-size:18px;
+    transition:.3s;
+}
+
+.values li:hover{
+    transform:translateX(10px);
+}
+
+/* ===========================
+   FUTURE ROADMAP
+=========================== */
+
+.future{
+    background:#eef4ff;
+}
+
+.roadmap{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+}
+
+.roadmap div{
+    background:white;
+    padding:25px;
+    text-align:center;
+    border-radius:15px;
+    font-weight:600;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.roadmap div:hover{
+    background:#2563eb;
+    color:white;
+}
+
+/* ===========================
+   STATS
+=========================== */
+
+.stats{
+    background:#0f172a;
+    color:white;
+}
+
+.stats h2{
+    color:white;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:30px;
+    text-align:center;
+}
+
+.stats-grid h3{
+    font-size:48px;
+    color:#60a5fa;
+}
+
+.stats-grid p{
+    margin-top:10px;
+    font-size:18px;
+}
+
+/* ===========================
+   CTA
+=========================== */
+
+.cta{
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:white;
+    text-align:center;
+}
+
+.cta h2{
+    color:white;
+    max-width:800px;
+    margin:auto auto 35px;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+
+footer{
+    background:#020617;
+    color:#cbd5e1;
+    text-align:center;
+    padding:35px 20px;
+}
+
+footer p{
+    font-size:15px;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:900px){
+
+.service-grid,
+.stats-grid,
+.roadmap{
+    grid-template-columns:1fr;
+}
+
+.stats-grid h3{
+    font-size:38px;
+}
+
+}

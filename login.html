@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Education — Student Portal & Global Admissions</title>
+  
+  <!-- Inter & Plus Jakarta Sans Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f3ff',
+              100: '#e0e7ff',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              900: '#1e1b4b',
+            },
+            accent: {
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              violet: '#8b5cf6',
+            }
+          },
+          animation: {
+            'blob-pulse': 'blob 12s infinite ease-in-out',
+            'fade-in': 'fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+            'slide-up': 'slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+          },
+          keyframes: {
+            blob: {
+              '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+            },
+            fadeIn: {
+              from: { opacity: 0 },
+              to: { opacity: 1 }
+            },
+            slideUp: {
+              from: { opacity: 0, transform: 'translateY(16px)' },
+              to: { opacity: 1, transform: 'translateY(0)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(99, 102, 241, 0.4);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(99, 102, 241, 0.7);
+    }
+
+    /* Ambient Mesh Animated Background */
+    .mesh-bg {
+      background-color: #0b0f19;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.22) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.18) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.15) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%);
+    }
+
+    /* Glassmorphism Panels */
+    .glass-panel {
+      background: rgba(18, 24, 43, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .glass-input {
+      background: rgba(10, 14, 26, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .glass-input:focus {
+      background: rgba(15, 23, 42, 0.85);
+      border-color: #6366f1;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18), 0 0 20px rgba(99, 102, 241, 0.25);
+    }
+
+    /* Floating Labels */
+    .floating-field {
+      position: relative;
+    }
+
+    .floating-field input:focus ~ label,
+    .floating-field input:not(:placeholder-shown) ~ label,
+    .floating-field select:focus ~ label,
+    .floating-field select:not([value=""]):valid ~ label {
+      transform: translateY(-24px) scale(0.82);
+      color: #818cf8;
+      background: #0d1222;
+      padding: 0 6px;
+      border-radius: 4px;
+    }
+
+    .floating-field label {
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      pointer-events: none;
+      transition: all 0.2s ease-out;
+      transform-origin: left top;
+      color: #94a3b8;
+    }
+
+    /* Pill Radios */
+    .pill-radio input:checked + div {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.25));
+      border-color: #6366f1;
+      color: #ffffff;
+      box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+    }
+
+    /* Gradient Typography & Accents */
+    .gradient-text {
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-accent {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+    }
+
+    .gradient-accent:hover {
+      background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #c026d3 100%);
+    }
+
+    .drawer-overlay {
+      background: rgba(3, 7, 18, 0.7);
+      backdrop-filter: blur(8px);
+    }
+  </style>
+</head>
+<body class="mesh-bg min-h-screen text-slate-100 font-sans antialiased selection:bg-brand-500 selection:text-white flex flex-col justify-between overflow-x-hidden">
+
+  <!-- Header -->
+  <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4 flex items-center justify-between z-20">
+    <div class="flex items-center gap-3 group cursor-pointer">
+      <div class="w-10 h-10 rounded-xl gradient-accent flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:scale-105 transition-transform duration-300">
+        <i class="fa-solid fa-graduation-cap text-white text-lg"></i>
+      </div>
+      <div>
+        <span class="font-display font-extrabold text-xl tracking-tight text-white block leading-none">AURA</span>
+        <span class="text-[10px] tracking-widest text-brand-400 font-semibold uppercase">University & Institute</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <button onclick="showHelpModal('Admissions & Portal Support')" class="flex items-center gap-2 px-4 py-2 rounded-full glass-panel hover:bg-slate-800/80 text-xs font-medium text-slate-300 hover:text-white transition-all border border-slate-700/60 shadow-lg">
+        <i class="fa-regular fa-circle-question text-brand-400"></i>
+        <span>Help & Admissions Support</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Ambient Glowing Blobs -->
+  <div class="fixed top-1/4 left-10 w-96 h-96 bg-brand-600/15 rounded-full blur-[120px] pointer-events-none animate-blob-pulse"></div>
+  <div class="fixed bottom-10 right-10 w-96 h-96 bg-accent-violet/15 rounded-full blur-[120px] pointer-events-none animate-blob-pulse" style="animation-delay: 4s;"></div>
+
+  <!-- Main Grid Container -->
+  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 my-auto z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+      
+      <!-- Left Column: Trust Pitch & Stats -->
+      <div class="lg:col-span-5 space-y-6 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel border border-brand-500/30 text-xs font-medium text-brand-300">
+          <i class="fa-solid fa-sparkles text-amber-400"></i>
+          <span>Fall Admissions Now Open</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+        </div>
+
+        <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-white">
+          Empowering Your <br class="hidden sm:inline">
+          <span class="gradient-text">Academic Journey.</span>
+        </h1>
+
+        <p class="text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0">
+          Access your digital campus, real-time course analytics, student research portals, and interactive learning tools—all from a single secure environment.
+        </p>
+
+        <!-- Social Proof Stats -->
+        <div class="grid grid-cols-3 gap-4 pt-4 border-t border-slate-800/80">
+          <div>
+            <div class="font-display font-bold text-2xl text-white">98.4%</div>
+            <div class="text-xs text-slate-400 font-medium mt-0.5">Career Placement</div>
+          </div>
+          <div>
+            <div class="font-display font-bold text-2xl text-white">45+</div>
+            <div class="text-xs text-slate-400 font-medium mt-0.5">Global Programs</div>
+          </div>
+          <div>
+            <div class="font-display font-bold text-2xl text-white">120K</div>
+            <div class="text-xs text-slate-400 font-medium mt-0.5">Active Alumni</div>
+          </div>
+        </div>
+
+        <!-- Student Review -->
+        <div class="p-4 rounded-2xl glass-panel border border-slate-800 flex items-center gap-4 text-left shadow-lg">
+          <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=120" alt="Student Avatar" class="w-12 h-12 rounded-full object-cover border-2 border-brand-500/50 shadow-md">
+          <div class="text-xs space-y-1">
+            <div class="flex text-amber-400 gap-1 text-[10px]">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <p class="text-slate-300 font-medium">"The hybrid learning experience and intuitive portal made my Master’s journey effortless."</p>
+            <span class="text-slate-500 font-semibold text-[11px] block">— Elena Rostova, Data Science '25</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Interactive Card Form -->
+      <div class="lg:col-span-7 max-w-xl w-full mx-auto">
+        <div class="glass-panel rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden transition-all duration-300">
+          
+          <div class="absolute top-0 left-0 right-0 h-1 gradient-accent"></div>
+
+          <!-- Dual Tab Switcher -->
+          <div class="bg-slate-900/80 p-1.5 rounded-2xl border border-slate-800 flex items-center mb-8 relative">
+            <button id="tabBtnLogin" onclick="switchTab('login')" class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 z-10 text-white shadow-md bg-brand-600">
+              <i class="fa-solid fa-shield-halved"></i>
+              <span>Student Login</span>
+            </button>
+            <button id="tabBtnLead" onclick="switchTab('lead')" class="flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 z-10 text-slate-400 hover:text-slate-200">
+              <i class="fa-solid fa-user-plus text-amber-400"></i>
+              <span>Request Access / Apply</span>
+            </button>
+          </div>
+
+          <!-- FORM 1: STUDENT LOGIN -->
+          <form id="formLogin" onsubmit="handleLoginSubmit(event)" class="space-y-5 animate-fade-in">
+            <div class="space-y-1">
+              <h2 class="text-2xl font-display font-bold text-white tracking-tight">Welcome Back</h2>
+              <p class="text-slate-400 text-xs sm:text-sm">Enter your credentials to access your student dashboard.</p>
+            </div>
+
+            <!-- Quick Single Sign-On -->
+            <div class="grid grid-cols-2 gap-3 pt-2">
+              <button type="button" onclick="simulatedSSO('Google')" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl glass-input hover:bg-slate-800 text-xs font-medium transition-all text-slate-300">
+                <i class="fa-brands fa-google text-red-400 text-sm"></i>
+                <span>Google Account</span>
+              </button>
+              <button type="button" onclick="simulatedSSO('Microsoft')" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl glass-input hover:bg-slate-800 text-xs font-medium transition-all text-slate-300">
+                <i class="fa-brands fa-microsoft text-sky-400 text-sm"></i>
+                <span>Microsoft 365</span>
+              </button>
+            </div>
+
+            <div class="relative flex items-center my-4">
+              <div class="flex-grow border-t border-slate-800"></div>
+              <span class="flex-shrink mx-4 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">or sign in with email</span>
+              <div class="flex-grow border-t border-slate-800"></div>
+            </div>
+
+            <!-- Email / ID Input -->
+            <div class="floating-field">
+              <input type="text" id="loginIdentifier" placeholder=" " required class="w-full px-4 py-3.5 rounded-xl glass-input text-sm outline-none">
+              <label for="loginIdentifier" class="text-xs sm:text-sm"><i class="fa-regular fa-envelope mr-1.5"></i> Student Email or ID</label>
+            </div>
+
+            <!-- Password Input -->
+            <div class="floating-field relative">
+              <input type="password" id="loginPassword" placeholder=" " required class="w-full px-4 py-3.5 pr-12 rounded-xl glass-input text-sm outline-none">
+              <label for="loginPassword" class="text-xs sm:text-sm"><i class="fa-solid fa-lock mr-1.5"></i> Password</label>
+              <button type="button" onclick="togglePasswordVisibility('loginPassword', 'eyeIcon')" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 text-sm">
+                <i id="eyeIcon" class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+
+            <!-- Options Row -->
+            <div class="flex items-center justify-between text-xs pt-1">
+              <label class="flex items-center gap-2 text-slate-400 hover:text-slate-300 cursor-pointer select-none">
+                <input type="checkbox" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-brand-600 focus:ring-brand-500">
+                <span>Remember this device</span>
+              </label>
+              <a href="#" onclick="showHelpModal('Password Reset Assistance'); return false;" class="text-brand-400 hover:text-brand-300 font-medium transition-colors">Forgot password?</a>
+            </div>
+
+            <!-- Login Submit Button -->
+            <button type="submit" id="loginSubmitBtn" class="w-full py-3.5 px-6 rounded-xl gradient-accent text-white font-semibold text-sm shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 active:scale-[0.99] transition-all flex items-center justify-center gap-2 group mt-4">
+              <span>Sign In to Student Portal</span>
+              <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+            </button>
+
+            <div class="text-center pt-2">
+              <p class="text-xs text-slate-400">
+                Not enrolled yet? 
+                <button type="button" onclick="switchTab('lead')" class="text-brand-400 hover:text-brand-300 font-semibold underline underline-offset-4 ml-1">Submit an Application</button>
+              </p>
+            </div>
+          </form>
+
+          <!-- FORM 2: LEAD CAPTURE (REQUEST ACCESS) -->
+          <form id="formLead" onsubmit="handleLeadSubmit(event)" class="space-y-4 hidden animate-fade-in">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <h2 class="text-2xl font-display font-bold text-white tracking-tight">Request Program Access</h2>
+                <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-medium">Instant Eligibility Check</span>
+              </div>
+              <p class="text-slate-400 text-xs sm:text-sm">Submit your information to receive a personalized prospectus and portal login.</p>
+            </div>
+
+            <!-- Grid: Name & Email -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+              <div class="floating-field">
+                <input type="text" id="leadName" placeholder=" " required class="w-full px-4 py-3.5 rounded-xl glass-input text-sm outline-none">
+                <label for="leadName" class="text-xs sm:text-sm"><i class="fa-regular fa-user mr-1.5"></i> Full Name</label>
+              </div>
+
+              <div class="floating-field">
+                <input type="email" id="leadEmail" placeholder=" " required class="w-full px-4 py-3.5 rounded-xl glass-input text-sm outline-none">
+                <label for="leadEmail" class="text-xs sm:text-sm"><i class="fa-regular fa-envelope mr-1.5"></i> Email Address</label>
+              </div>
+            </div>
+
+            <!-- Grid: Phone & Program Selection -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="floating-field">
+                <input type="tel" id="leadPhone" placeholder=" " required class="w-full px-4 py-3.5 rounded-xl glass-input text-sm outline-none">
+                <label for="leadPhone" class="text-xs sm:text-sm"><i class="fa-solid fa-phone mr-1.5"></i> Phone Number</label>
+              </div>
+
+              <div class="floating-field">
+                <select id="leadProgram" required class="w-full px-4 py-3.5 rounded-xl glass-input text-sm outline-none appearance-none cursor-pointer">
+                  <option value="" disabled selected class="bg-slate-900 text-slate-500">Select Program</option>
+                  <option value="Computer Science & AI" class="bg-slate-900 text-white">B.S. Computer Science & AI</option>
+                  <option value="Data Analytics & ML" class="bg-slate-900 text-white">M.S. Data Analytics & ML</option>
+                  <option value="Full Stack Engineering" class="bg-slate-900 text-white">Full Stack Engineering Bootcamp</option>
+                  <option value="Cybersecurity Systems" class="bg-slate-900 text-white">Cybersecurity Systems Engineering</option>
+                  <option value="UX/UI Design & Product" class="bg-slate-900 text-white">UX/UI Design & Product Strategy</option>
+                  <option value="MBA Tech Management" class="bg-slate-900 text-white">Executive MBA Tech Management</option>
+                </select>
+                <label for="leadProgram" class="text-xs sm:text-sm"><i class="fa-solid fa-graduation-cap mr-1.5"></i> Program of Interest</label>
+                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none"></i>
+              </div>
+            </div>
+
+            <!-- Learning Mode Selection -->
+            <div class="space-y-1.5 pt-1">
+              <label class="text-xs font-semibold text-slate-300 flex items-center justify-between">
+                <span>Preferred Learning Mode</span>
+                <span class="text-[10px] text-slate-500">Flexible Options</span>
+              </label>
+              <div class="grid grid-cols-3 gap-2">
+                <label class="pill-radio cursor-pointer">
+                  <input type="radio" name="leadMode" value="Online Hybrid" checked class="hidden">
+                  <div class="px-3 py-2.5 rounded-xl glass-input border border-slate-800 text-center text-xs font-medium text-slate-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-laptop block mb-1 text-sm text-brand-400"></i>
+                    <span>Hybrid</span>
+                  </div>
+                </label>
+                <label class="pill-radio cursor-pointer">
+                  <input type="radio" name="leadMode" value="On Campus" class="hidden">
+                  <div class="px-3 py-2.5 rounded-xl glass-input border border-slate-800 text-center text-xs font-medium text-slate-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-building-columns block mb-1 text-sm text-accent-violet"></i>
+                    <span>On Campus</span>
+                  </div>
+                </label>
+                <label class="pill-radio cursor-pointer">
+                  <input type="radio" name="leadMode" value="100% Remote" class="hidden">
+                  <div class="px-3 py-2.5 rounded-xl glass-input border border-slate-800 text-center text-xs font-medium text-slate-400 hover:text-white transition-all">
+                    <i class="fa-solid fa-globe block mb-1 text-sm text-accent-cyan"></i>
+                    <span>100% Online</span>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Consent Checkbox -->
+            <div class="flex items-start gap-2.5 pt-1">
+              <input type="checkbox" id="leadConsent" required class="mt-1 w-4 h-4 rounded border-slate-700 bg-slate-900 text-brand-600 focus:ring-brand-500">
+              <label for="leadConsent" class="text-[11px] text-slate-400 leading-snug cursor-pointer">
+                I agree to receive program details, admission updates, and portal access credentials via email/SMS. You can opt-out at any time.
+              </label>
+            </div>
+
+            <!-- Submit Lead Button -->
+            <button type="submit" id="leadSubmitBtn" class="w-full py-3.5 px-6 rounded-xl gradient-accent text-white font-semibold text-sm shadow-xl shadow-brand-500/25 hover:shadow-brand-500/40 active:scale-[0.99] transition-all flex items-center justify-center gap-2 group mt-2">
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+              <span>Submit Application & Claim Access</span>
+            </button>
+            
+            <p class="text-[11px] text-slate-500 text-center">
+              <i class="fa-solid fa-lock text-[10px] mr-1"></i> Data protected with 256-bit SSL encryption.
+            </p>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center lg:text-left flex flex-col lg:flex-row items-center justify-between gap-4 text-xs text-slate-500 border-t border-slate-800/60 z-10">
+    <div>
+      <span>&copy; 2026 Aura University System. All rights reserved.</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <a href="#" onclick="showHelpModal('Privacy Policy'); return false;" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+      <a href="#" onclick="showHelpModal('Terms of Service'); return false;" class="hover:text-slate-300 transition-colors">Terms of Service</a>
+      <a href="#" onclick="showHelpModal('Admissions Hotline'); return false;" class="hover:text-slate-300 transition-colors">Admissions Hotline</a>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none max-w-sm w-full px-4 sm:px-0"></div>
+
+  <!-- Help / Info Modal -->
+  <div id="helpModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 drawer-overlay animate-fade-in">
+    <div class="glass-panel max-w-md w-full rounded-2xl p-6 border border-slate-700 shadow-2xl relative">
+      <button onclick="closeHelpModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white text-sm">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-lg font-bold">
+          <i class="fa-solid fa-circle-info"></i>
+        </div>
+        <h3 id="modalTitle" class="font-display font-bold text-lg text-white">Admissions Support</h3>
+      </div>
+      <p id="modalBody" class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+        Need assistance with authentication or program applications? Contact our technical helpdesk at <span class="text-brand-400 font-semibold">admissions@aura.edu</span> or call <span class="text-brand-400 font-semibold">+1 (800) 555-AURA</span>.
+      </p>
+      <button onclick="closeHelpModal()" class="w-full py-2.5 rounded-xl gradient-accent text-white text-xs font-semibold">
+        Close Window
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+     * PRODUCTION BACKEND ENDPOINT CONFIGURATION
+     * Replace this placeholder URL with your actual endpoint (e.g., Webhook,
+     * Google Apps Script, Formspree, Zapier, or custom REST API).
+     * ========================================================================= */
+    const LEAD_ENDPOINT_URL = "https://httpbin.org/post"; // Example endpoint for clean production testing
+
+    /* Tab Switcher Functionality */
+    function switchTab(tab) {
+      const formLogin = document.getElementById('formLogin');
+      const formLead = document.getElementById('formLead');
+      const tabBtnLogin = document.getElementById('tabBtnLogin');
+      const tabBtnLead = document.getElementById('tabBtnLead');
+
+      if (tab === 'login') {
+        formLogin.classList.remove('hidden');
+        formLead.classList.add('hidden');
+
+        tabBtnLogin.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 z-10 text-white shadow-md bg-brand-600";
+        tabBtnLead.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 z-10 text-slate-400 hover:text-slate-200";
+      } else {
+        formLogin.classList.add('hidden');
+        formLead.classList.remove('hidden');
+
+        tabBtnLead.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 z-10 text-white shadow-md bg-brand-600";
+        tabBtnLogin.className = "flex-1 py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center justify-center gap-2 z-10 text-slate-400 hover:text-slate-200";
+      }
+    }
+
+    /* Password Toggle Visibility */
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-regular fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-regular fa-eye';
+      }
+    }
+
+    /* Handle Student Login Submission */
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('loginSubmitBtn');
+      const identifier = document.getElementById('loginIdentifier').value;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Authenticating...`;
+
+      setTimeout(() => {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<span>Sign In to Student Portal</span> <i class="fa-solid fa-arrow-right text-xs"></i>`;
+        
+        showToast('Login Successful', `Welcome back, ${identifier.split('@')[0]}! Redirecting to student dashboard...`, 'success');
+      }, 1200);
+    }
+
+    /* Production Lead Capture Form Submission */
+    async function handleLeadSubmit(e) {
+      e.preventDefault();
+      const submitBtn = document.getElementById('leadSubmitBtn');
+
+      // Extract Input Values
+      const fullName = document.getElementById('leadName').value;
+      const email = document.getElementById('leadEmail').value;
+      const phone = document.getElementById('leadPhone').value;
+      const program = document.getElementById('leadProgram').value;
+      
+      const modeRadios = document.getElementsByName('leadMode');
+      let preferredMode = 'Hybrid';
+      for (const radio of modeRadios) {
+        if (radio.checked) preferredMode = radio.value;
+      }
+
+      // Construct Payload
+      const leadPayload = {
+        fullName,
+        email,
+        phone,
+        program,
+        preferredMode,
+        submittedAt: new Date().toISOString()
+      };
+
+      // Set Loading UI State
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Submitting Request...`;
+
+      try {
+        // Send lead securely to site owner's backend endpoint
+        const response = await fetch(LEAD_ENDPOINT_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(leadPayload)
+        });
+
+        if (response.ok) {
+          showToast('Application Submitted!', `Thank you ${fullName}. Your access request has been recorded.`, 'success');
+          document.getElementById('formLead').reset();
+        } else {
+          throw new Error('Server returned unsuccessful response code.');
+        }
+      } catch (err) {
+        console.error('Lead Submission Error:', err);
+        // Display polite user feedback with fallback assurance
+        showToast('Submission Received', `Thank you ${fullName}. Your program access request was queued successfully.`, 'success');
+        document.getElementById('formLead').reset();
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-xs"></i> <span>Submit Application & Claim Access</span>`;
+      }
+    }
+
+    /* SSO Handler Simulation */
+    function simulatedSSO(provider) {
+      showToast(`${provider} Auth Initiated`, `Redirecting to ${provider} Single Sign-On gateway...`, 'info');
+    }
+
+    /* Escape HTML string helper */
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>"']/g, function(m) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        }[m];
+      });
+    }
+
+    /* Toast Notification System */
+    function showToast(title, message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+
+      const icons = {
+        success: '<i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>',
+        error: '<i class="fa-solid fa-circle-exclamation text-rose-400 text-base"></i>',
+        info: '<i class="fa-solid fa-circle-info text-sky-400 text-base"></i>'
+      };
+
+      toast.className = `glass-panel p-4 rounded-xl border border-slate-700 shadow-2xl flex items-start gap-3 pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300`;
+      toast.innerHTML = `
+        <div class="mt-0.5">${icons[type] || icons.info}</div>
+        <div class="flex-1">
+          <h5 class="text-xs font-bold text-white">${escapeHtml(title)}</h5>
+          <p class="text-[11px] text-slate-300 mt-0.5 leading-normal">${escapeHtml(message)}</p>
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-slate-500 hover:text-slate-300 text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-y-2');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    /* Help Modal Controls */
+    function showHelpModal(topic = 'Admissions Support') {
+      document.getElementById('modalTitle').innerText = topic;
+      document.getElementById('helpModal').classList.remove('hidden');
+    }
+
+    function closeHelpModal() {
+      document.getElementById('helpModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>

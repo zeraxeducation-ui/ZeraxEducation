@@ -277,9 +277,9 @@
 
             <!-- Quick Single Sign-On -->
             <div class="grid grid-cols-2 gap-3 pt-2">
-              <button type="button" onclick="simulatedSSO('Google')" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl glass-input hover:bg-slate-800 text-xs font-medium transition-all text-slate-300">
+              <button type="button" id="googleSignInBtn" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl glass-input hover:bg-slate-800 text-xs font-medium transition-all text-slate-300">
                 <i class="fa-brands fa-google text-red-400 text-sm"></i>
-                <span>Google Account</span>
+                <span>Continue with Google</span>
               </button>
               <button type="button" onclick="simulatedSSO('Microsoft')" class="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl glass-input hover:bg-slate-800 text-xs font-medium transition-all text-slate-300">
                 <i class="fa-brands fa-microsoft text-sky-400 text-sm"></i>
@@ -468,6 +468,88 @@
     </div>
   </div>
 
+  <!-- Firebase Web Authentication -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+    import {
+      getAuth,
+      GoogleAuthProvider,
+      signInWithPopup,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+    /*
+     * PASTE YOUR FIREBASE WEB CONFIG BELOW.
+     * Firebase Console → Project settings → General → Your apps → Web app.
+     * Never put a Firebase service-account/private key in this HTML file.
+     */
+    const firebaseConfig = {
+  apiKey: "AIzaSyDRVRc4yJHliuKQF_Dg9DT3bzmR6gcZIdo",
+  authDomain: "zerax-1fc60.firebaseapp.com",
+  projectId: "zerax-1fc60",
+  storageBucket: "zerax-1fc60.firebasestorage.app",
+  messagingSenderId: "341513283639",
+  appId: "1:341513283639:web:499bae5ce26ee8772477b2",
+  measurementId: "G-S90V6MRTTD"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    const googleButton = document.getElementById("googleSignInBtn");
+
+    googleButton.addEventListener("click", async () => {
+      googleButton.disabled = true;
+      googleButton.innerHTML =
+        '<i class="fa-solid fa-spinner animate-spin"></i><span>Signing in...</span>';
+
+      try {
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+        const displayName = user.displayName || user.email || "Student";
+
+        showToast(
+          "Google Sign-In Successful",
+          `Welcome, ${displayName}!`,
+          "success"
+        );
+
+        // When your dashboard is ready, you can redirect here:
+        // window.location.href = "dashboard.html";
+
+      } catch (error) {
+        console.error("Google Sign-In Error:", error);
+
+        let message = "Google sign-in could not be completed.";
+
+        if (error.code === "auth/popup-closed-by-user") {
+          message = "The Google sign-in window was closed.";
+        } else if (error.code === "auth/popup-blocked") {
+          message = "Your browser blocked the Google sign-in popup.";
+        } else if (error.code === "auth/unauthorized-domain") {
+          message = "This website domain is not authorized in Firebase Authentication.";
+        }
+
+        showToast("Sign-In Failed", message, "error");
+      } finally {
+        googleButton.disabled = false;
+        googleButton.innerHTML =
+          '<i class="fa-brands fa-google text-red-400 text-sm"></i><span>Continue with Google</span>';
+      }
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("Firebase user signed in:", {
+          uid: user.uid,
+          name: user.displayName,
+          email: user.email
+        });
+      }
+    });
+  </script>
+
   <script>
     /* =========================================================================
      * PRODUCTION BACKEND ENDPOINT CONFIGURATION
@@ -584,11 +666,6 @@
         submitBtn.disabled = false;
         submitBtn.innerHTML = `<i class="fa-solid fa-paper-plane text-xs"></i> <span>Submit Application & Claim Access</span>`;
       }
-    }
-
-    /* SSO Handler Simulation */
-    function simulatedSSO(provider) {
-      showToast(`${provider} Auth Initiated`, `Redirecting to ${provider} Single Sign-On gateway...`, 'info');
     }
 
     /* Escape HTML string helper */
